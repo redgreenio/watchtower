@@ -4,20 +4,17 @@ import (
   "github.com/stretchr/testify/assert"
   "io/ioutil"
   "testing"
+  "time"
 )
 
 func TestParse(t *testing.T) {
   // given
   content := ReadTestDataFile("dunzo-delivery-partner.html")
-
-  // when
-  actual := Parse(content)
-
-  // then
+  releasedOn, _ := time.Parse(DateLayout, "July 19, 2021")
   expected := &PlayStoreAppListing{
     Name:            "Dunzo Delivery Partner",
     AppId:           "runner.dunzo.com.dunzo_runner",
-    ReleasedOn:      "July 19, 2021",
+    ReleasedOn:      releasedOn,
     Size:            "29M",
     Installs:        "100,000+",
     Version:         "3.22.0.0",
@@ -25,6 +22,11 @@ func TestParse(t *testing.T) {
     ContentRating:   "Everyone",
     OfferedBy:       "Dunzo Digital",
   }
+
+  // when
+  actual := Parse(content)
+
+  // then
   assert.Equal(t, expected, actual)
 }
 

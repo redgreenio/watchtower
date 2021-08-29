@@ -4,6 +4,7 @@ import (
   "errors"
   "fmt"
   "github.com/spf13/cobra"
+  _ "time"
   "watchtower/download"
   "watchtower/parser"
 )
@@ -27,7 +28,7 @@ var verifyCmd = &cobra.Command{
 func printListing(listing *parser.PlayStoreAppListing) {
   fmt.Println("App ID           : " + listing.AppId)
   fmt.Println("App name         : " + listing.Name)
-  fmt.Println("Released on      : " + listing.ReleasedOn)
+  fmt.Println("Released on      : " + listing.ReleasedOn.Format(parser.DateLayout))
   fmt.Println("Size             : " + listing.Size)
   fmt.Println("Installs         : " + listing.Installs)
   fmt.Println("Version          : " + listing.Version)

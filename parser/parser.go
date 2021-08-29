@@ -5,6 +5,7 @@ import (
   _ "github.com/PuerkitoBio/goquery"
   "net/url"
   "strings"
+  "time"
 )
 
 const nameClassSelector = ".AHFaub"
@@ -27,13 +28,15 @@ const contentRatingTitleText = "Content Rating"
 const htmlAttrHref = "href"
 const htmlDiv = "div"
 
+const DateLayout string = "January 2, 2006"
+
 func Parse(content string) *PlayStoreAppListing {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
   return &PlayStoreAppListing{
     Name:            getName(document),
     AppId:           getAppId(document),
-    ReleasedOn:      getValueText(releasedOnTitleText, document),
+    ReleasedOn:      getReleasedOn(document),
     Size:            getValueText(sizeTitleText, document),
     Installs:        getValueText(installsTitleText, document),
     Version:         getValueText(versionTitleText, document),
@@ -53,6 +56,12 @@ func getAppId(document *goquery.Document) string {
   playStoreUrl := getPlayStoreUrl(link)
   parsedUrl, _ := url.Parse(playStoreUrl)
   return parsedUrl.Query().Get(appIdQueryParameterName)
+}
+
+func getReleasedOn(document *goquery.Document) time.Time {
+  dateText := getValueText(releasedOnTitleText, document)
+  date, _ := time.Parse(DateLayout, dateText)
+  return date
 }
 
 func getPlayStoreUrl(linkElement *goquery.Selection) string {
