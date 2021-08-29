@@ -11,9 +11,10 @@ func Parse(content string) *PlayStoreAppListing {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
   return &PlayStoreAppListing{
-    Name:  getName(document),
-    AppId: getAppId(document),
-    Size:  getSize(document),
+    Name:     getName(document),
+    AppId:    getAppId(document),
+    Size:     getSize(document),
+    Installs: getInstalls(document),
   }
 }
 
@@ -35,10 +36,18 @@ func getPlayStoreUrl(linkElement *goquery.Selection) string {
 }
 
 func getSize(document *goquery.Document) string {
+  return getValue("Size", document)
+}
+
+func getInstalls(document *goquery.Document) string {
+  return getValue("Installs", document)
+}
+
+func getValue(title string, document *goquery.Document) string {
   element := document.Find(".BgcNfc")
   size := ""
   element.Each(func(i int, selection *goquery.Selection) {
-    if selection.Text() == "Size" {
+    if selection.Text() == title {
       size = selection.Siblings().Children().Last().Text()
     }
   })
