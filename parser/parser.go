@@ -33,8 +33,8 @@ func getPlayStoreUrl(linkElements *goquery.Selection) string {
   linkElements.Each(func(i int, selection *goquery.Selection) {
     attr, exists := selection.Attr("rel")
     if exists && attr == "canonical" {
-      url, _ := selection.Attr("href")
-      playStoreUrl = url
+      hrefUrl, _ := selection.Attr("href")
+      playStoreUrl = hrefUrl
     }
   })
   return playStoreUrl
