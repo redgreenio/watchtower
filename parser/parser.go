@@ -33,13 +33,13 @@ func Parse(content string) *PlayStoreAppListing {
   return &PlayStoreAppListing{
     Name:            getName(document),
     AppId:           getAppId(document),
-    ReleasedOn:      getReleasedOn(document),
-    Size:            getSize(document),
-    Installs:        getInstalls(document),
-    Version:         getVersion(document),
-    RequiresAndroid: getRequiresAndroid(document),
+    ReleasedOn:      getValueText(releasedOnTitleText, document),
+    Size:            getValueText(sizeTitleText, document),
+    Installs:        getValueText(installsTitleText, document),
+    Version:         getValueText(versionTitleText, document),
+    RequiresAndroid: getValueText(requiresAndroidTitleText, document),
     ContentRating:   getContentRating(document),
-    OfferedBy:       getOfferedBy(document),
+    OfferedBy:       getValueText(offeredByTitleText, document),
   }
 }
 
@@ -55,38 +55,14 @@ func getAppId(document *goquery.Document) string {
   return parsedUrl.Query().Get(appIdQueryParameterName)
 }
 
-func getReleasedOn(document *goquery.Document) string {
-  return getValueText(releasedOnTitleText, document)
-}
-
 func getPlayStoreUrl(linkElement *goquery.Selection) string {
   playStoreUrl, _ := linkElement.Attr(htmlAttrHref)
   return playStoreUrl
 }
 
-func getSize(document *goquery.Document) string {
-  return getValueText(sizeTitleText, document)
-}
-
-func getInstalls(document *goquery.Document) string {
-  return getValueText(installsTitleText, document)
-}
-
-func getVersion(document *goquery.Document) string {
-  return getValueText(versionTitleText, document)
-}
-
-func getRequiresAndroid(document *goquery.Document) string {
-  return getValueText(requiresAndroidTitleText, document)
-}
-
 func getContentRating(document *goquery.Document) string {
   selection := getValueSelection(contentRatingTitleText, document)
   return selection.Find(contentRatingSelector).Find(htmlDiv).First().Text()
-}
-
-func getOfferedBy(document *goquery.Document) string {
-  return getValueText(offeredByTitleText, document)
 }
 
 func getValueText(title string, document *goquery.Document) string {
