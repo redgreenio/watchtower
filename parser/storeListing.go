@@ -1,5 +1,6 @@
 package parser
 
-type playStoreAppListing struct {
+type PlayStoreAppListing struct {
   Name string
+  AppId string
 }

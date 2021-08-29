@@ -14,8 +14,9 @@ func TestParse(t *testing.T) {
   actual := Parse(content)
 
   // then
-  expected := &playStoreAppListing{
+  expected := &PlayStoreAppListing{
     Name: "Dunzo Delivery Partner",
+    AppId: "runner.dunzo.com.dunzo_runner",
   }
   assert.Equal(t, expected, actual)
 }

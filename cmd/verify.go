@@ -20,6 +20,11 @@ var verifyCmd = &cobra.Command{
     appId := args[0]
     content := download.Download(appId)
     appListing := parser.Parse(content)
-    fmt.Println(appListing.Name)
+    printListing(appListing)
   },
+}
+
+func printListing(listing *parser.PlayStoreAppListing) {
+  fmt.Println("App ID:   " + listing.AppId)
+  fmt.Println("App Name: " + listing.Name)
 }
