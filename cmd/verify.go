@@ -9,10 +9,10 @@ import (
 )
 
 var verifyCmd = &cobra.Command{
-  Use: "verify",
+  Use:       "verify",
   Args: func(cmd *cobra.Command, args []string) error {
     if len(args) < 1 {
-      return errors.New("missing app ID")
+      return errors.New("missing argument 'appId'")
     }
     return nil
   },

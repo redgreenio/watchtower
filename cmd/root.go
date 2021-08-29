@@ -19,5 +19,10 @@ func Execute() {
 }
 
 func init() {
+  configureVerifyCmd()
   rootCmd.AddCommand(verifyCmd)
+}
+
+func configureVerifyCmd() {
+  verifyCmd.SetUsageTemplate("hint: Maybe you wanted to say 'watchtower verify <appId>'?")
 }
