@@ -13,6 +13,7 @@ func Parse(content string) *PlayStoreAppListing {
   return &PlayStoreAppListing{
     Name:            getName(document),
     AppId:           getAppId(document),
+    ReleasedOn:      getReleasedOn(document),
     Size:            getSize(document),
     Installs:        getInstalls(document),
     Version:         getVersion(document),
@@ -32,6 +33,10 @@ func getAppId(document *goquery.Document) string {
   playStoreUrl := getPlayStoreUrl(link)
   parsedUrl, _ := url.Parse(playStoreUrl)
   return parsedUrl.Query().Get("id")
+}
+
+func getReleasedOn(document *goquery.Document) string {
+  return getValueText("Updated", document)
 }
 
 func getPlayStoreUrl(linkElement *goquery.Selection) string {

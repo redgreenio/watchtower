@@ -17,6 +17,7 @@ func TestParse(t *testing.T) {
   expected := &PlayStoreAppListing{
     Name:            "Dunzo Delivery Partner",
     AppId:           "runner.dunzo.com.dunzo_runner",
+    ReleasedOn:      "July 19, 2021",
     Size:            "29M",
     Installs:        "100,000+",
     Version:         "3.22.0.0",
