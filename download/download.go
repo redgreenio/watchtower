@@ -1,10 +1,10 @@
 package download
 
 import (
-"fmt"
+  "fmt"
   "io/ioutil"
   "log"
-"net/http"
+  "net/http"
 )
 import _ "net/http"
 

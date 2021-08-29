@@ -1,6 +1,6 @@
 package parser
 
 type PlayStoreAppListing struct {
-  Name string
+  Name  string
   AppId string
 }

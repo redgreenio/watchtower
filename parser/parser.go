@@ -11,7 +11,7 @@ func Parse(content string) *PlayStoreAppListing {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
   return &PlayStoreAppListing{
-    Name: getName(document),
+    Name:  getName(document),
     AppId: getAppId(document),
   }
 }
