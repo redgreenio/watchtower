@@ -11,12 +11,13 @@ func Parse(content string) *PlayStoreAppListing {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
   return &PlayStoreAppListing{
-    Name:     getName(document),
-    AppId:    getAppId(document),
-    Size:     getSize(document),
-    Installs: getInstalls(document),
-    Version: getVersion(document),
+    Name:            getName(document),
+    AppId:           getAppId(document),
+    Size:            getSize(document),
+    Installs:        getInstalls(document),
+    Version:         getVersion(document),
     RequiresAndroid: getRequiresAndroid(document),
+    ContentRating:   getContentRating(document),
   }
 }
 
@@ -38,28 +39,37 @@ func getPlayStoreUrl(linkElement *goquery.Selection) string {
 }
 
 func getSize(document *goquery.Document) string {
-  return getValue("Size", document)
+  return getValueText("Size", document)
 }
 
 func getInstalls(document *goquery.Document) string {
-  return getValue("Installs", document)
+  return getValueText("Installs", document)
 }
 
 func getVersion(document *goquery.Document) string {
-  return getValue("Current Version", document)
+  return getValueText("Current Version", document)
 }
 
 func getRequiresAndroid(document *goquery.Document) string {
-  return getValue("Requires Android", document)
+  return getValueText("Requires Android", document)
 }
 
-func getValue(title string, document *goquery.Document) string {
+func getContentRating(document *goquery.Document) string {
+  selection := getValueSelection("Content Rating", document)
+  return selection.Find(".htlgb").Find("div").First().Text()
+}
+
+func getValueText(title string, document *goquery.Document) string {
+  return getValueSelection(title, document).Text()
+}
+
+func getValueSelection(title string, document *goquery.Document) *goquery.Selection {
   element := document.Find(".BgcNfc")
-  size := ""
+  var valueSelection *goquery.Selection = nil
   element.Each(func(i int, selection *goquery.Selection) {
     if selection.Text() == title {
-      size = selection.Siblings().Children().Last().Text()
+      valueSelection = selection.Siblings().Children().Last()
     }
   })
-  return size
+  return valueSelection
 }

@@ -7,4 +7,5 @@ type PlayStoreAppListing struct {
   Installs        string
   Version         string
   RequiresAndroid string
+  ContentRating   string
 }

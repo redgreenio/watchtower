@@ -31,4 +31,5 @@ func printListing(listing *parser.PlayStoreAppListing) {
   fmt.Println("Installs         : " + listing.Installs)
   fmt.Println("Version          : " + listing.Version)
   fmt.Println("Requires Android : " + listing.RequiresAndroid)
+  fmt.Println("Content Rating   : " + listing.ContentRating)
 }
