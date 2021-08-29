@@ -7,6 +7,26 @@ import (
   "strings"
 )
 
+const nameClassSelector = ".AHFaub"
+const htmlSpan = "span"
+
+const appIdSelector = "[rel=canonical]"
+const appIdQueryParameterName = "id"
+
+const valueSelector = ".BgcNfc"
+const releasedOnTitleText = "Updated"
+const sizeTitleText = "Size"
+const installsTitleText = "Installs"
+const versionTitleText = "Current Version"
+const requiresAndroidTitleText = "Requires Android"
+const offeredByTitleText = "Offered By"
+
+const contentRatingSelector = ".htlgb"
+const contentRatingTitleText = "Content Rating"
+
+const htmlAttrHref = "href"
+const htmlDiv = "div"
+
 func Parse(content string) *PlayStoreAppListing {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
@@ -24,49 +44,49 @@ func Parse(content string) *PlayStoreAppListing {
 }
 
 func getName(document *goquery.Document) string {
-  span := document.Find(".AHFaub").Find("span")
+  span := document.Find(nameClassSelector).Find(htmlSpan)
   return strings.TrimSpace(span.Text())
 }
 
 func getAppId(document *goquery.Document) string {
-  link := document.Find("[rel=canonical]")
+  link := document.Find(appIdSelector)
   playStoreUrl := getPlayStoreUrl(link)
   parsedUrl, _ := url.Parse(playStoreUrl)
-  return parsedUrl.Query().Get("id")
+  return parsedUrl.Query().Get(appIdQueryParameterName)
 }
 
 func getReleasedOn(document *goquery.Document) string {
-  return getValueText("Updated", document)
+  return getValueText(releasedOnTitleText, document)
 }
 
 func getPlayStoreUrl(linkElement *goquery.Selection) string {
-  playStoreUrl, _ := linkElement.Attr("href")
+  playStoreUrl, _ := linkElement.Attr(htmlAttrHref)
   return playStoreUrl
 }
 
 func getSize(document *goquery.Document) string {
-  return getValueText("Size", document)
+  return getValueText(sizeTitleText, document)
 }
 
 func getInstalls(document *goquery.Document) string {
-  return getValueText("Installs", document)
+  return getValueText(installsTitleText, document)
 }
 
 func getVersion(document *goquery.Document) string {
-  return getValueText("Current Version", document)
+  return getValueText(versionTitleText, document)
 }
 
 func getRequiresAndroid(document *goquery.Document) string {
-  return getValueText("Requires Android", document)
+  return getValueText(requiresAndroidTitleText, document)
 }
 
 func getContentRating(document *goquery.Document) string {
-  selection := getValueSelection("Content Rating", document)
-  return selection.Find(".htlgb").Find("div").First().Text()
+  selection := getValueSelection(contentRatingTitleText, document)
+  return selection.Find(contentRatingSelector).Find(htmlDiv).First().Text()
 }
 
 func getOfferedBy(document *goquery.Document) string {
-  return getValueText("Offered By", document)
+  return getValueText(offeredByTitleText, document)
 }
 
 func getValueText(title string, document *goquery.Document) string {
@@ -74,7 +94,7 @@ func getValueText(title string, document *goquery.Document) string {
 }
 
 func getValueSelection(title string, document *goquery.Document) *goquery.Selection {
-  element := document.Find(".BgcNfc")
+  element := document.Find(valueSelector)
   var valueSelection *goquery.Selection = nil
   element.Each(func(i int, selection *goquery.Selection) {
     if selection.Text() == title {
