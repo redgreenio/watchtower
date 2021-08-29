@@ -15,6 +15,7 @@ func Parse(content string) *PlayStoreAppListing {
     AppId:    getAppId(document),
     Size:     getSize(document),
     Installs: getInstalls(document),
+    Version: getVersion(document),
   }
 }
 
@@ -41,6 +42,10 @@ func getSize(document *goquery.Document) string {
 
 func getInstalls(document *goquery.Document) string {
   return getValue("Installs", document)
+}
+
+func getVersion(document *goquery.Document) string {
+  return getValue("Current Version", document)
 }
 
 func getValue(title string, document *goquery.Document) string {

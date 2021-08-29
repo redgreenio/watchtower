@@ -19,6 +19,7 @@ func TestParse(t *testing.T) {
     AppId:    "runner.dunzo.com.dunzo_runner",
     Size:     "29M",
     Installs: "100,000+",
+    Version:  "3.22.0.0",
   }
   assert.Equal(t, expected, actual)
 }

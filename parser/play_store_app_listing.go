@@ -5,4 +5,5 @@ type PlayStoreAppListing struct {
   AppId    string
   Size     string
   Installs string
+  Version  string
 }
