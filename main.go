@@ -2,15 +2,12 @@ package main
 
 import (
   "fmt"
-  "log"
-  "net/http"
+  "watchtower/download"
+  "watchtower/parser"
 )
-import _ "net/http"
 
 func main() {
-  resp, err := http.Get("https://google.com")
-  if err != nil {
-    log.Fatalln("Uh oh! unable to fetch URL.")
-  }
-  fmt.Println(resp.Status)
+  content := download.Download("com.spotify.music")
+  appListing := parser.Parse(content)
+  fmt.Println(appListing.Name)
 }
