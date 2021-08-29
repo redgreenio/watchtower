@@ -25,9 +25,10 @@ var verifyCmd = &cobra.Command{
 }
 
 func printListing(listing *parser.PlayStoreAppListing) {
-  fmt.Println("App ID   : " + listing.AppId)
-  fmt.Println("App Name : " + listing.Name)
-  fmt.Println("Size     : " + listing.Size)
-  fmt.Println("Installs : " + listing.Installs)
-  fmt.Println("Version  : " + listing.Version)
+  fmt.Println("App ID           : " + listing.AppId)
+  fmt.Println("App Name         : " + listing.Name)
+  fmt.Println("Size             : " + listing.Size)
+  fmt.Println("Installs         : " + listing.Installs)
+  fmt.Println("Version          : " + listing.Version)
+  fmt.Println("Requires Android : " + listing.RequiresAndroid)
 }

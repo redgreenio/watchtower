@@ -15,11 +15,12 @@ func TestParse(t *testing.T) {
 
   // then
   expected := &PlayStoreAppListing{
-    Name:     "Dunzo Delivery Partner",
-    AppId:    "runner.dunzo.com.dunzo_runner",
-    Size:     "29M",
-    Installs: "100,000+",
-    Version:  "3.22.0.0",
+    Name:            "Dunzo Delivery Partner",
+    AppId:           "runner.dunzo.com.dunzo_runner",
+    Size:            "29M",
+    Installs:        "100,000+",
+    Version:         "3.22.0.0",
+    RequiresAndroid: "5.0 and up",
   }
   assert.Equal(t, expected, actual)
 }
