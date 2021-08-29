@@ -2,12 +2,29 @@ package cmd
 
 import (
   "errors"
-  "fmt"
+  "github.com/fatih/color"
+  _ "github.com/fatih/color"
   "github.com/spf13/cobra"
   _ "time"
   "watchtower/download"
   "watchtower/parser"
 )
+
+const appId = "App ID"
+const appName = "App name"
+const releasedOn = "Updated on"
+const size = "Size"
+const installs = "Installs"
+const version = "Version"
+const requiresAndroid = "Requires Android"
+const contentRating = "Content rating"
+const offeredBy = "Offered by"
+
+const messageListingFound = "Listing found ✓"
+const formatTitleValue = "%-18s"
+
+var green = color.New(color.Bold, color.FgGreen)
+var bold = color.New(color.Bold)
 
 var verifyCmd = &cobra.Command{
   Use: "verify",
@@ -26,13 +43,23 @@ var verifyCmd = &cobra.Command{
 }
 
 func printListing(listing *parser.PlayStoreAppListing) {
-  fmt.Println("App ID           : " + listing.AppId)
-  fmt.Println("App name         : " + listing.Name)
-  fmt.Println("Released on      : " + listing.ReleasedOn.Format(parser.DateLayout))
-  fmt.Println("Size             : " + listing.Size)
-  fmt.Println("Installs         : " + listing.Installs)
-  fmt.Println("Version          : " + listing.Version)
-  fmt.Println("Requires Android : " + listing.RequiresAndroid)
-  fmt.Println("Content rating   : " + listing.ContentRating)
-  fmt.Println("Offered by       : " + listing.OfferedBy)
+  printListingFound()
+  printFormattedLine(appId, listing.AppId)
+  printFormattedLine(appName, listing.Name)
+  printFormattedLine(releasedOn, listing.ReleasedOn.Format(parser.DateLayout))
+  printFormattedLine(size, listing.Size)
+  printFormattedLine(installs, listing.Installs)
+  printFormattedLine(version, listing.Version)
+  printFormattedLine(requiresAndroid, listing.RequiresAndroid)
+  printFormattedLine(contentRating, listing.ContentRating)
+  printFormattedLine(offeredBy, listing.OfferedBy)
+}
+
+func printListingFound() {
+  _, _ = green.Println(messageListingFound)
+}
+
+func printFormattedLine(title, value string) {
+  _, _ = bold.Printf(formatTitleValue, title)
+  println(value)
 }
