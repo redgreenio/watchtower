@@ -8,7 +8,7 @@ import (
 
 func Parse(content string) *playStoreAppListing {
   return &playStoreAppListing{
-    name: getName(content),
+    Name: getName(content),
   }
 }
 
