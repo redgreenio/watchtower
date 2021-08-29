@@ -9,7 +9,7 @@ import (
 )
 
 var verifyCmd = &cobra.Command{
-  Use:       "verify",
+  Use: "verify",
   Args: func(cmd *cobra.Command, args []string) error {
     if len(args) < 1 {
       return errors.New("missing argument 'appId'")
@@ -27,4 +27,5 @@ var verifyCmd = &cobra.Command{
 func printListing(listing *parser.PlayStoreAppListing) {
   fmt.Println("App ID:   " + listing.AppId)
   fmt.Println("App Name: " + listing.Name)
+  fmt.Println("Size:     " + listing.Size)
 }

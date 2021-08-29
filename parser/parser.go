@@ -13,6 +13,7 @@ func Parse(content string) *PlayStoreAppListing {
   return &PlayStoreAppListing{
     Name:  getName(document),
     AppId: getAppId(document),
+    Size:  getSize(document),
   }
 }
 
@@ -31,4 +32,15 @@ func getAppId(document *goquery.Document) string {
 func getPlayStoreUrl(linkElement *goquery.Selection) string {
   playStoreUrl, _ := linkElement.Attr("href")
   return playStoreUrl
+}
+
+func getSize(document *goquery.Document) string {
+  element := document.Find(".BgcNfc")
+  size := ""
+  element.Each(func(i int, selection *goquery.Selection) {
+    if selection.Text() == "Size" {
+      size = selection.Siblings().Children().Last().Text()
+    }
+  })
+  return size
 }
