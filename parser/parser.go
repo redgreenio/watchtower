@@ -22,20 +22,13 @@ func getName(document *goquery.Document) string {
 }
 
 func getAppId(document *goquery.Document) string {
-  linkElements := document.Find("link")
-  playStoreUrl := getPlayStoreUrl(linkElements)
+  link := document.Find("[rel=canonical]")
+  playStoreUrl := getPlayStoreUrl(link)
   parsedUrl, _ := url.Parse(playStoreUrl)
   return parsedUrl.Query().Get("id")
 }
 
-func getPlayStoreUrl(linkElements *goquery.Selection) string {
-  var playStoreUrl = ""
-  linkElements.Each(func(i int, selection *goquery.Selection) {
-    attr, exists := selection.Attr("rel")
-    if exists && attr == "canonical" {
-      hrefUrl, _ := selection.Attr("href")
-      playStoreUrl = hrefUrl
-    }
-  })
+func getPlayStoreUrl(linkElement *goquery.Selection) string {
+  playStoreUrl, _ := linkElement.Attr("href")
   return playStoreUrl
 }
