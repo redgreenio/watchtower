@@ -8,4 +8,5 @@ type PlayStoreAppListing struct {
   Version         string
   RequiresAndroid string
   ContentRating   string
+  OfferedBy       string
 }

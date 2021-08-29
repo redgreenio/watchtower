@@ -18,6 +18,7 @@ func Parse(content string) *PlayStoreAppListing {
     Version:         getVersion(document),
     RequiresAndroid: getRequiresAndroid(document),
     ContentRating:   getContentRating(document),
+    OfferedBy:       getOfferedBy(document),
   }
 }
 
@@ -57,6 +58,10 @@ func getRequiresAndroid(document *goquery.Document) string {
 func getContentRating(document *goquery.Document) string {
   selection := getValueSelection("Content Rating", document)
   return selection.Find(".htlgb").Find("div").First().Text()
+}
+
+func getOfferedBy(document *goquery.Document) string {
+  return getValueText("Offered By", document)
 }
 
 func getValueText(title string, document *goquery.Document) string {

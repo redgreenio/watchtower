@@ -22,6 +22,7 @@ func TestParse(t *testing.T) {
     Version:         "3.22.0.0",
     RequiresAndroid: "5.0 and up",
     ContentRating:   "Everyone",
+    OfferedBy:       "Dunzo Digital",
   }
   assert.Equal(t, expected, actual)
 }
