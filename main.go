@@ -1,13 +1,11 @@
 package main
 
 import (
-  "fmt"
-  "watchtower/download"
-  "watchtower/parser"
+  _ "github.com/spf13/cobra"
+  _ "github.com/spf13/viper"
+  "watchtower/cmd"
 )
 
 func main() {
-  content := download.Download("com.spotify.music")
-  appListing := parser.Parse(content)
-  fmt.Println(appListing.Name)
+  cmd.Execute()
 }
