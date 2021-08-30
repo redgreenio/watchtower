@@ -28,6 +28,19 @@ func TestInsertNewAppId(t *testing.T) {
   assert.True(t, repository.Exists("com.netflix.ninja"))
 }
 
+func TestDoNotInsertExistingAppId(t *testing.T) {
+  // given
+  repository := testRepository()
+  repository.Insert(App{AppId: "com.netflix.ninja", Country: nil})
+
+  // when
+  inserted := repository.Insert(App{AppId: "com.netflix.ninja", Country: nil})
+
+  // then
+  assert.False(t, inserted)
+  assert.True(t, repository.Exists("com.netflix.ninja"))
+}
+
 func testRepository() AppsRepository {
   return DefaultAppsRepository{db: inMemoryDb()}
 }

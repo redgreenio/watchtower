@@ -13,6 +13,9 @@ func (r DefaultAppsRepository) Exists(appId string) bool {
 }
 
 func (r DefaultAppsRepository) Insert(app App) bool {
-  r.db.Create(&app)
-  return true
+  if !r.Exists(app.AppId) {
+    r.db.Create(&app)
+    return true
+  }
+  return false
 }
