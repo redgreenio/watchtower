@@ -2,6 +2,7 @@ package cmd
 
 import (
   "fmt"
+  "github.com/fatih/color"
   "github.com/spf13/cobra"
   "watchtower/app"
   "watchtower/database"
@@ -9,6 +10,8 @@ import (
   "watchtower/parser"
   "watchtower/release"
 )
+
+var red = color.New(color.FgRed)
 
 var observeCmd = &cobra.Command{
   Use: "observe",
@@ -27,6 +30,11 @@ var observeCmd = &cobra.Command{
         continue
       }
       release := parser.Parse(content)
+      if release.AppId == "" {
+        _, _ = red.Printf("Unable to parse HTML for '%s'", app.AppId)
+        println()
+        continue
+      }
       releasesRepository.Insert(release)
     }
   },
