@@ -28,8 +28,6 @@ const contentRatingTitleText = "Content Rating"
 const htmlAttrHref = "href"
 const htmlDiv = "div"
 
-const DateLayout string = "January 2, 2006"
-
 func Parse(content string) *Release {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
@@ -60,7 +58,7 @@ func getAppId(document *goquery.Document) string {
 
 func getReleasedOn(document *goquery.Document) time.Time {
   dateText := getValueText(releasedOnTitleText, document)
-  date, _ := time.Parse(DateLayout, dateText)
+  date, _ := time.Parse(ReleasedOnDateLayout, dateText)
   return date
 }
 

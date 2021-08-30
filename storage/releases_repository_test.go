@@ -14,17 +14,19 @@ func TestInsertIntoEmptyTable(t *testing.T) {
   repository := testRepository()
   assert.Empty(t, repository.List("com.netflix.ninja"))
 
-  // when
+  releasedOn, _ := time.Parse(parser.ReleasedOnDateLayout, "August 9, 2021")
   release := parser.Release{
     Name:            "Netflix",
     AppId:           "com.netflix.ninja",
-    ReleasedOn:      time.Now(),
+    ReleasedOn:      releasedOn,
     Size:            "29M",
     Installs:        "50,000,000+",
     RequiresAndroid: "Varies with device",
     ContentRating:   "Varies with device",
     OfferedBy:       "Netflix, Inc.",
   }
+
+  // when
   inserted := repository.Insert(release)
 
   // then

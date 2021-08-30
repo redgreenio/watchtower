@@ -46,7 +46,7 @@ func printListing(listing *parser.Release) {
   printListingFound()
   printFormattedLine(appId, listing.AppId)
   printFormattedLine(appName, listing.Name)
-  printFormattedLine(releasedOn, listing.ReleasedOn.Format(parser.DateLayout))
+  printFormattedLine(releasedOn, listing.ReleasedOn.Format(parser.ReleasedOnDateLayout))
   printFormattedLine(size, listing.Size)
   printFormattedLine(installs, listing.Installs)
   printFormattedLine(version, listing.Version)
