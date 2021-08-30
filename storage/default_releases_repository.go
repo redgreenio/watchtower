@@ -9,13 +9,13 @@ type DefaultReleasesRepository struct {
   db *gorm.DB
 }
 
-func Insert(repository DefaultReleasesRepository, release parser.Release) bool {
-  repository.db.Create(&release)
+func (r DefaultReleasesRepository) Insert(release parser.Release) bool {
+  r.db.Create(&release)
   return true
 }
 
-func List(repository DefaultReleasesRepository, appId string) []parser.Release {
+func (r DefaultReleasesRepository) List(appId string) []parser.Release {
   var releases []parser.Release
-  repository.db.Where("app_id = ?", appId).Find(&releases)
+  r.db.Where("app_id = ?", appId).Find(&releases)
   return releases
 }

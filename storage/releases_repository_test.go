@@ -15,7 +15,7 @@ func TestInsertIntoEmptyTable(t *testing.T) {
   _ = database.AutoMigrate(parser.Release{})
 
   repository := DefaultReleasesRepository{db: database}
-  assert.Empty(t, List(repository, "com.netflix.ninja"))
+  assert.Empty(t, repository.List("com.netflix.ninja"))
 
   // when
   release := parser.Release{
@@ -28,12 +28,12 @@ func TestInsertIntoEmptyTable(t *testing.T) {
     ContentRating:   "Varies with device",
     OfferedBy:       "Netflix, Inc.",
   }
-  inserted := Insert(repository, release)
+  inserted := repository.Insert(release)
 
   // then
   assert.True(t, inserted)
 
-  releases := List(repository, "com.netflix.ninja")
+  releases := repository.List("com.netflix.ninja")
   assert.Len(t, releases, 1)
   assert.Equal(t, releases[0].AppId, release.AppId)
 }
