@@ -29,4 +29,7 @@ func init() {
   // verify <appId>
   verifyCmd.SetUsageTemplate("hint: Maybe you wanted to say 'watchtower verify <appId>'?")
   rootCmd.AddCommand(verifyCmd)
+
+  // observe
+  rootCmd.AddCommand(observeCmd)
 }

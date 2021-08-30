@@ -84,7 +84,7 @@ func TestInsertReleaseWithDifferentReleasedOnDate(t *testing.T) {
 }
 
 func testRepository() ReleasesRepository {
-  return DefaultReleasesRepository{db: inMemoryDb()}
+  return DefaultReleasesRepository{Database: inMemoryDb()}
 }
 
 func inMemoryDb() *gorm.DB {

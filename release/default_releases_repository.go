@@ -6,15 +6,15 @@ import (
 )
 
 type DefaultReleasesRepository struct {
-  db *gorm.DB
+  Database *gorm.DB
 }
 
 func (r DefaultReleasesRepository) Insert(release parser.Release) bool {
   var existingRelease *parser.Release
-  r.db.Where("app_id = ? AND version = ? AND released_on = ?", release.AppId, release.Version, release.ReleasedOn).Find(&existingRelease)
+  r.Database.Where("app_id = ? AND version = ? AND released_on = ?", release.AppId, release.Version, release.ReleasedOn).Find(&existingRelease)
 
   if existingRelease.AppId == "" {
-    r.db.Create(&release)
+    r.Database.Create(&release)
     return true
   } else {
     return false
@@ -23,6 +23,6 @@ func (r DefaultReleasesRepository) Insert(release parser.Release) bool {
 
 func (r DefaultReleasesRepository) List(appId string) []parser.Release {
   var releases []parser.Release
-  r.db.Where("app_id = ?", appId).Find(&releases)
+  r.Database.Where("app_id = ?", appId).Find(&releases)
   return releases
 }

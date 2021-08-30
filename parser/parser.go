@@ -28,10 +28,10 @@ const contentRatingTitleText = "Content Rating"
 const htmlAttrHref = "href"
 const htmlDiv = "div"
 
-func Parse(content string) *Release {
+func Parse(content string) Release {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
-  return &Release{
+  return Release{
     Name:            getName(document),
     AppId:           getAppId(document),
     ReleasedOn:      getReleasedOn(document),
