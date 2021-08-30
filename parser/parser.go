@@ -80,11 +80,8 @@ func getValueText(title string, document *goquery.Document) string {
 
 func getValueSelection(title string, document *goquery.Document) *goquery.Selection {
   element := document.Find(valueSelector)
-  var valueSelection *goquery.Selection = nil
-  element.Each(func(i int, selection *goquery.Selection) {
-    if selection.Text() == title {
-      valueSelection = selection.Siblings().Children().Last()
-    }
+  desiredTitleSelection := element.FilterFunction(func(i int, selection *goquery.Selection) bool {
+    return selection.Text() == title
   })
-  return valueSelection
+  return desiredTitleSelection.Siblings().Children().Last()
 }
