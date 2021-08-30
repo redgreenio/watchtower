@@ -2,10 +2,9 @@ package app
 
 import (
   "github.com/stretchr/testify/assert"
-  "gorm.io/driver/sqlite"
   "gorm.io/gorm"
   "testing"
-  "watchtower/parser"
+  "watchtower/database"
 )
 
 func TestExistsReturnsFalseForEmptyTable(t *testing.T) {
@@ -104,8 +103,5 @@ func testRepository() AppsRepository {
 }
 
 func inMemoryDb() *gorm.DB {
-  database, _ := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
-  _ = database.AutoMigrate(parser.Release{})
-  _ = database.AutoMigrate(App{})
-  return database
+  return database.InitDb("file::memory:")
 }
