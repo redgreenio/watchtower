@@ -1,6 +1,9 @@
 package parser
 
-import "time"
+import (
+  "gorm.io/gorm"
+  "time"
+)
 
 type Release struct {
   Name            string
@@ -12,4 +15,5 @@ type Release struct {
   RequiresAndroid string
   ContentRating   string
   OfferedBy       string
+  gorm.Model
 }
