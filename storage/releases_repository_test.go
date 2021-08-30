@@ -9,32 +9,47 @@ import (
   "watchtower/parser"
 )
 
+var releasedOn, _ = time.Parse(parser.ReleasedOnDateLayout, "August 9, 2021")
+var testRelease = parser.Release{
+  Name:            "Netflix",
+  AppId:           "com.netflix.ninja",
+  ReleasedOn:      releasedOn,
+  Size:            "29M",
+  Installs:        "50,000,000+",
+  Version:         "12.0.1",
+  RequiresAndroid: "Varies with device",
+  ContentRating:   "Varies with device",
+  OfferedBy:       "Netflix, Inc.",
+}
+
 func TestInsertIntoEmptyTable(t *testing.T) {
   // given
   repository := testRepository()
   assert.Empty(t, repository.List("com.netflix.ninja"))
 
-  releasedOn, _ := time.Parse(parser.ReleasedOnDateLayout, "August 9, 2021")
-  release := parser.Release{
-    Name:            "Netflix",
-    AppId:           "com.netflix.ninja",
-    ReleasedOn:      releasedOn,
-    Size:            "29M",
-    Installs:        "50,000,000+",
-    RequiresAndroid: "Varies with device",
-    ContentRating:   "Varies with device",
-    OfferedBy:       "Netflix, Inc.",
-  }
-
   // when
-  inserted := repository.Insert(release)
+  inserted := repository.Insert(testRelease)
 
   // then
   assert.True(t, inserted)
 
   releases := repository.List("com.netflix.ninja")
   assert.Len(t, releases, 1)
-  assert.Equal(t, releases[0].AppId, release.AppId)
+  assert.Equal(t, releases[0].AppId, testRelease.AppId)
+}
+
+func TestDoNotInsertReleaseWithSameVersion(t *testing.T) {
+  // given
+  repository := testRepository()
+  repository.Insert(testRelease)
+
+  // when
+  inserted := repository.Insert(testRelease)
+
+  // then
+  assert.False(t, inserted)
+  releases := repository.List("com.netflix.ninja")
+  assert.Len(t, releases, 1)
 }
 
 func testRepository() DefaultReleasesRepository {
@@ -42,7 +57,7 @@ func testRepository() DefaultReleasesRepository {
 }
 
 func inMemoryDb() *gorm.DB {
-  database, _ := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
+  database, _ := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
   _ = database.AutoMigrate(parser.Release{})
   return database
 }

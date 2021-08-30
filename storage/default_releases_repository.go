@@ -10,8 +10,15 @@ type DefaultReleasesRepository struct {
 }
 
 func (r DefaultReleasesRepository) Insert(release parser.Release) bool {
-  r.db.Create(&release)
-  return true
+  var existingRelease *parser.Release
+  r.db.Where("app_id = ? AND version = ? AND released_on = ?", release.AppId, release.Version, release.ReleasedOn).Find(&existingRelease)
+
+  if existingRelease.AppId == "" {
+    r.db.Create(&release)
+    return true
+  } else {
+    return false
+  }
 }
 
 func (r DefaultReleasesRepository) List(appId string) []parser.Release {
