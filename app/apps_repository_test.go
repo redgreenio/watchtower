@@ -21,7 +21,7 @@ func TestInsertNewAppId(t *testing.T) {
   repository := testRepository()
 
   // when
-  inserted := repository.Insert(App{AppId: "com.netflix.ninja", Country: nil})
+  inserted := repository.Insert(App{AppId: "com.netflix.ninja", Country: ""})
 
   // then
   assert.True(t, inserted)
@@ -31,14 +31,38 @@ func TestInsertNewAppId(t *testing.T) {
 func TestDoNotInsertExistingAppId(t *testing.T) {
   // given
   repository := testRepository()
-  repository.Insert(App{AppId: "com.netflix.ninja", Country: nil})
+  repository.Insert(App{AppId: "com.netflix.ninja", Country: ""})
 
   // when
-  inserted := repository.Insert(App{AppId: "com.netflix.ninja", Country: nil})
+  inserted := repository.Insert(App{AppId: "com.netflix.ninja", Country: ""})
 
   // then
   assert.False(t, inserted)
   assert.True(t, repository.Exists("com.netflix.ninja"))
+}
+
+func TestNoEntriesInAnEmptyTable(t *testing.T) {
+  // given
+  repository := testRepository()
+
+  // when
+  apps := repository.List()
+
+  // then
+  assert.Len(t, apps, 0)
+}
+
+func TestListAllApps(t *testing.T) {
+  // given
+  repository := testRepository()
+  repository.Insert(App{AppId: "com.netflix.ninja"})
+  repository.Insert(App{AppId: "io.redgreen.watchtower", Country: "IN"})
+
+  // when
+  apps := repository.List()
+
+  // then
+  assert.Len(t, apps, 2)
 }
 
 func testRepository() AppsRepository {

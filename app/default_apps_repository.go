@@ -19,3 +19,9 @@ func (r DefaultAppsRepository) Insert(app App) bool {
   }
   return false
 }
+
+func (r DefaultAppsRepository) List() []App {
+  var apps []App
+  r.db.Find(&apps)
+  return apps
+}
