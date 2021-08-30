@@ -19,11 +19,14 @@ func Execute() {
 }
 
 func init() {
-  // add
+  // add <appId>
   addCmd.SetUsageTemplate("hint: Maybe you wanted to say 'watchtower add <appId>'?")
   rootCmd.AddCommand(addCmd)
 
-  // verify
+  // list
+  rootCmd.AddCommand(listCmd)
+
+  // verify <appId>
   verifyCmd.SetUsageTemplate("hint: Maybe you wanted to say 'watchtower verify <appId>'?")
   rootCmd.AddCommand(verifyCmd)
 }

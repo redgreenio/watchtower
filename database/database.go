@@ -7,6 +7,8 @@ import (
   "watchtower/parser"
 )
 
+const DbPath = "wip.db"
+
 func InitDb(dsn string) *gorm.DB {
   database, _ := gorm.Open(sqlite.Open(dsn), &gorm.Config{})
   _ = database.AutoMigrate(parser.Release{})

@@ -8,8 +8,6 @@ import (
   "watchtower/database"
 )
 
-const dbPath = "wip.db"
-
 var addCmd = &cobra.Command{
   Use: "add",
   Args: func(cmd *cobra.Command, args []string) error {
@@ -20,7 +18,7 @@ var addCmd = &cobra.Command{
   },
   Run: func(cmd *cobra.Command, args []string) {
     appId := args[0]
-    database := database.InitDb(dbPath)
+    database := database.InitDb(database.DbPath)
     repository := app.DefaultAppsRepository{Database: database}
     inserted := repository.Insert(app.App{AppId: appId})
 
