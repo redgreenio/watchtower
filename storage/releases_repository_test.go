@@ -11,10 +11,7 @@ import (
 
 func TestInsertIntoEmptyTable(t *testing.T) {
   // given
-  database, _ := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
-  _ = database.AutoMigrate(parser.Release{})
-
-  repository := DefaultReleasesRepository{db: database}
+  repository := testRepository()
   assert.Empty(t, repository.List("com.netflix.ninja"))
 
   // when
@@ -36,4 +33,14 @@ func TestInsertIntoEmptyTable(t *testing.T) {
   releases := repository.List("com.netflix.ninja")
   assert.Len(t, releases, 1)
   assert.Equal(t, releases[0].AppId, release.AppId)
+}
+
+func testRepository() DefaultReleasesRepository {
+  return DefaultReleasesRepository{db: inMemoryDb()}
+}
+
+func inMemoryDb() *gorm.DB {
+  database, _ := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
+  _ = database.AutoMigrate(parser.Release{})
+  return database
 }
