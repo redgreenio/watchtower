@@ -1,4 +1,4 @@
-package storage
+package release
 
 import (
   "watchtower/parser"
