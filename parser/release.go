@@ -2,7 +2,7 @@ package parser
 
 import "time"
 
-type PlayStoreAppListing struct {
+type Release struct {
   Name            string
   AppId           string
   ReleasedOn      time.Time

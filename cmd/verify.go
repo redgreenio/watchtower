@@ -42,7 +42,7 @@ var verifyCmd = &cobra.Command{
   },
 }
 
-func printListing(listing *parser.PlayStoreAppListing) {
+func printListing(listing *parser.Release) {
   printListingFound()
   printFormattedLine(appId, listing.AppId)
   printFormattedLine(appName, listing.Name)

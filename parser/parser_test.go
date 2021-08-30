@@ -11,7 +11,7 @@ func TestParse(t *testing.T) {
   // given
   content := ReadTestDataFile("dunzo-delivery-partner.html")
   releasedOn, _ := time.Parse(DateLayout, "July 19, 2021")
-  expected := &PlayStoreAppListing{
+  expected := &Release{
     Name:            "Dunzo Delivery Partner",
     AppId:           "runner.dunzo.com.dunzo_runner",
     ReleasedOn:      releasedOn,

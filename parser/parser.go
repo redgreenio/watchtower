@@ -30,10 +30,10 @@ const htmlDiv = "div"
 
 const DateLayout string = "January 2, 2006"
 
-func Parse(content string) *PlayStoreAppListing {
+func Parse(content string) *Release {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
-  return &PlayStoreAppListing{
+  return &Release{
     Name:            getName(document),
     AppId:           getAppId(document),
     ReleasedOn:      getReleasedOn(document),
