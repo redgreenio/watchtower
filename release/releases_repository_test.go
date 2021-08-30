@@ -83,7 +83,7 @@ func TestInsertReleaseWithDifferentReleasedOnDate(t *testing.T) {
   assert.Len(t, releases, 2)
 }
 
-func testRepository() DefaultReleasesRepository {
+func testRepository() ReleasesRepository {
   return DefaultReleasesRepository{db: inMemoryDb()}
 }
 
