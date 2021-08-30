@@ -100,7 +100,7 @@ func TestInsertAppWithoutCountry(t *testing.T) {
 }
 
 func testRepository() AppsRepository {
-  return DefaultAppsRepository{db: inMemoryDb()}
+  return DefaultAppsRepository{Database: inMemoryDb()}
 }
 
 func inMemoryDb() *gorm.DB {
