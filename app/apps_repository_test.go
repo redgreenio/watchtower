@@ -65,6 +65,40 @@ func TestListAllApps(t *testing.T) {
   assert.Len(t, apps, 2)
 }
 
+func TestInsertAppWithCountry(t *testing.T) {
+  // given
+  repository := testRepository()
+  app := App{AppId: "io.redgreen.watchtower", Country: "UK"}
+  repository.Insert(app)
+
+  // when
+  apps := repository.List()
+
+  // then
+  assert.Len(t, apps, 1)
+
+  actual := apps[0]
+  assert.Equal(t, actual.AppId, "io.redgreen.watchtower")
+  assert.Equal(t, actual.Country, "UK")
+}
+
+func TestInsertAppWithoutCountry(t *testing.T) {
+  // given
+  repository := testRepository()
+  app := App{AppId: "com.netflix.ninja"}
+  repository.Insert(app)
+
+  // when
+  apps := repository.List()
+
+  // then
+  assert.Len(t, apps, 1)
+
+  actual := apps[0]
+  assert.Equal(t, actual.AppId, "com.netflix.ninja")
+  assert.Equal(t, actual.Country, "")
+}
+
 func testRepository() AppsRepository {
   return DefaultAppsRepository{db: inMemoryDb()}
 }
