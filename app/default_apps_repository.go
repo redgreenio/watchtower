@@ -7,5 +7,12 @@ type DefaultAppsRepository struct {
 }
 
 func (r DefaultAppsRepository) Exists(appId string) bool {
-  return false
+  var app *App
+  r.db.Where("app_id = ?", appId).Find(&app)
+  return app.AppId == appId
+}
+
+func (r DefaultAppsRepository) Insert(app App) bool {
+  r.db.Create(&app)
+  return true
 }

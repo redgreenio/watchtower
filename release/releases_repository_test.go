@@ -6,6 +6,7 @@ import (
   "gorm.io/gorm"
   "testing"
   "time"
+  "watchtower/app"
   "watchtower/parser"
 )
 
@@ -90,5 +91,6 @@ func testRepository() ReleasesRepository {
 func inMemoryDb() *gorm.DB {
   database, _ := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
   _ = database.AutoMigrate(parser.Release{})
+  _ = database.AutoMigrate(app.App{})
   return database
 }
