@@ -21,7 +21,11 @@ var observeCmd = &cobra.Command{
     appsCount := len(apps)
     for index, app := range apps {
       println(fmt.Sprintf("[%d/%d] Downloading release info for '%s'", index+1, appsCount, app.AppId))
-      content := download.Download(app.AppId)
+      content, err := download.Download(app.AppId)
+      if err != nil {
+        println(fmt.Sprintf("[%d/%d] Download failed for '%s'", index+1, appsCount, app.AppId))
+        continue
+      }
       release := parser.Parse(content)
       releasesRepository.Insert(release)
     }

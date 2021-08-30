@@ -8,13 +8,14 @@ import (
 )
 import _ "net/http"
 
-func Download(appId string) string {
+func Download(appId string) (body string, downloadError error) {
   resp, err := http.Get("https://play.google.com/store/apps/details?id=" + appId)
   if err != nil {
     log.Fatalln(fmt.Sprintf("Uh oh! unable to download listing for '%s'.", appId))
+    return "", err
   }
   content, _ := ioutil.ReadAll(resp.Body)
   _ = resp.Body.Close()
 
-  return string(content)
+  return string(content), nil
 }
