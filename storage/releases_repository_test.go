@@ -52,6 +52,37 @@ func TestDoNotInsertReleaseWithSameVersion(t *testing.T) {
   assert.Len(t, releases, 1)
 }
 
+func TestInsertReleaseWithDifferentVersion(t *testing.T) {
+  // given
+  repository := testRepository()
+  repository.Insert(testRelease)
+
+  // when
+  testRelease.Version = "12.0.2"
+  inserted := repository.Insert(testRelease)
+
+  // then
+  assert.True(t, inserted)
+  releases := repository.List("com.netflix.ninja")
+  assert.Len(t, releases, 2)
+}
+
+func TestInsertReleaseWithDifferentReleasedOnDate(t *testing.T) {
+  // given
+  repository := testRepository()
+  repository.Insert(testRelease)
+  newerReleasedOn, _ := time.Parse(parser.ReleasedOnDateLayout, "August 10, 2021")
+
+  // when
+  testRelease.ReleasedOn = newerReleasedOn
+  inserted := repository.Insert(testRelease)
+
+  // then
+  assert.True(t, inserted)
+  releases := repository.List("com.netflix.ninja")
+  assert.Len(t, releases, 2)
+}
+
 func testRepository() DefaultReleasesRepository {
   return DefaultReleasesRepository{db: inMemoryDb()}
 }
