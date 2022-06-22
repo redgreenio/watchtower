@@ -7,7 +7,7 @@ import (
   "watchtower/parser"
 )
 
-const DbPath = "xwatchtower.db"
+const DbPath = "watchtower.db"
 
 func InitDb(dsn string) *gorm.DB {
   database, _ := gorm.Open(sqlite.Open(dsn), &gorm.Config{})
