@@ -10,7 +10,7 @@ import (
 func TestParseV1Listing(t *testing.T) {
   // given
   content := ReadTestDataFile("v1-listing.html")
-  releasedOn, _ := time.Parse(ReleasedOnDateLayout, "July 19, 2021")
+  releasedOn, _ := time.Parse(ReleasedOnDateLayoutV1, "July 19, 2021")
   expected := Release{
     Name:            "Dunzo Delivery Partner",
     AppId:           "runner.dunzo.com.dunzo_runner",

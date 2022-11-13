@@ -9,7 +9,7 @@ import (
   "watchtower/parser"
 )
 
-var releasedOn, _ = time.Parse(parser.ReleasedOnDateLayout, "August 9, 2021")
+var releasedOn, _ = time.Parse(parser.ReleasedOnDateLayoutV1, "August 9, 2021")
 var testRelease = parser.Release{
   Name:            "Netflix",
   AppId:           "com.netflix.ninja",
@@ -71,7 +71,7 @@ func TestInsertReleaseWithDifferentReleasedOnDate(t *testing.T) {
   // given
   repository := testRepository()
   repository.Insert(testRelease)
-  newerReleasedOn, _ := time.Parse(parser.ReleasedOnDateLayout, "August 10, 2021")
+  newerReleasedOn, _ := time.Parse(parser.ReleasedOnDateLayoutV1, "August 10, 2021")
 
   // when
   testRelease.ReleasedOn = newerReleasedOn

@@ -5,8 +5,6 @@ import (
   "time"
 )
 
-const ReleasedOnDateLayout string = "January 2, 2006"
-
 type Release struct {
   Name            string
   AppId           string

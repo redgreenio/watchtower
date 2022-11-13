@@ -8,6 +8,8 @@ import (
   "time"
 )
 
+const ReleasedOnDateLayoutV1 string = "January 2, 2006"
+
 type V1ListingParser struct {
 }
 
@@ -61,7 +63,7 @@ func getAppIdV1(document *goquery.Document) string {
 
 func getReleasedOnV1(document *goquery.Document) time.Time {
   dateText := getValueTextV1(releasedOnTitleText, document)
-  date, _ := time.Parse(ReleasedOnDateLayout, dateText)
+  date, _ := time.Parse(ReleasedOnDateLayoutV1, dateText)
   return date
 }
 
