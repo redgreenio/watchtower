@@ -12,9 +12,10 @@ func (parser V2ListingParser) Parse(content string) Release {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
   return Release{
-    Name:     getNameV2(document),
-    AppId:    getAppIdV2(document),
-    Installs: getInstallsV2(document),
+    Name:      getNameV2(document),
+    AppId:     getAppIdV2(document),
+    Installs:  getInstallsV2(document),
+    OfferedBy: getOfferedByV2(document),
   }
 }
 
@@ -36,4 +37,9 @@ func getInstallsV2(document *goquery.Document) string {
   firstFlexItem := document.Find("div .wVqUob").First()
   installsNode := firstFlexItem.Next().Children().First()
   return strings.TrimSpace(installsNode.Text())
+}
+
+func getOfferedByV2(document *goquery.Document) string {
+  offeredBySpan := document.Find("div > a > span").First()
+  return strings.TrimSpace(offeredBySpan.Text())
 }
