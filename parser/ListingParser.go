@@ -12,4 +12,6 @@ type ListingParser interface {
   getPlayStoreUrl(linkElement *goquery.Selection) string
   getContentRating(document *goquery.Document) string
   getValueText(title string, document *goquery.Document) string
+
+  Parse(content string) Release
 }

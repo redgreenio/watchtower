@@ -24,7 +24,7 @@ func TestParseV1Listing(t *testing.T) {
   }
 
   // when
-  actual := Parse(content)
+  actual := V1ListingParser{}.Parse(content)
 
   // then
   assert.Equal(t, expected, actual)

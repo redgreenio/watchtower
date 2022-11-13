@@ -37,7 +37,7 @@ var verifyCmd = &cobra.Command{
   Run: func(cmd *cobra.Command, args []string) {
     appId := args[0]
     content, _ := download.Download(appId, "")
-    appListing := parser.Parse(content)
+    appListing := parser.V1ListingParser{}.Parse(content)
     printListing(appListing)
   },
 }

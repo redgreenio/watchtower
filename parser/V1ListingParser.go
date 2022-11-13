@@ -8,6 +8,9 @@ import (
   "time"
 )
 
+type V1ListingParser struct {
+}
+
 const nameClassSelector = ".AHFaub"
 const htmlSpan = "span"
 
@@ -28,51 +31,51 @@ const contentRatingTitleText = "Content Rating"
 const htmlAttrHref = "href"
 const htmlDiv = "div"
 
-func Parse(content string) Release {
+func (parser V1ListingParser) Parse(content string) Release {
   document, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 
   return Release{
-    Name:            getName(document),
-    AppId:           getAppId(document),
-    ReleasedOn:      getReleasedOn(document),
-    Size:            getValueText(sizeTitleText, document),
-    Installs:        getValueText(installsTitleText, document),
-    Version:         getValueText(versionTitleText, document),
-    RequiresAndroid: getValueText(requiresAndroidTitleText, document),
-    ContentRating:   getContentRating(document),
-    OfferedBy:       getValueText(offeredByTitleText, document),
+    Name:            parser.getName(document),
+    AppId:           parser.getAppId(document),
+    ReleasedOn:      parser.getReleasedOn(document),
+    Size:            parser.getValueText(sizeTitleText, document),
+    Installs:        parser.getValueText(installsTitleText, document),
+    Version:         parser.getValueText(versionTitleText, document),
+    RequiresAndroid: parser.getValueText(requiresAndroidTitleText, document),
+    ContentRating:   parser.getContentRating(document),
+    OfferedBy:       parser.getValueText(offeredByTitleText, document),
   }
 }
 
-func getName(document *goquery.Document) string {
+func (parser V1ListingParser) getName(document *goquery.Document) string {
   span := document.Find(nameClassSelector).Find(htmlSpan)
   return strings.TrimSpace(span.Text())
 }
 
-func getAppId(document *goquery.Document) string {
+func (parser V1ListingParser) getAppId(document *goquery.Document) string {
   link := document.Find(appIdSelector)
-  playStoreUrl := getPlayStoreUrl(link)
+  playStoreUrl := parser.getPlayStoreUrl(link)
   parsedUrl, _ := url.Parse(playStoreUrl)
   return parsedUrl.Query().Get(appIdQueryParameterName)
 }
 
-func getReleasedOn(document *goquery.Document) time.Time {
-  dateText := getValueText(releasedOnTitleText, document)
+func (parser V1ListingParser) getReleasedOn(document *goquery.Document) time.Time {
+  dateText := parser.getValueText(releasedOnTitleText, document)
   date, _ := time.Parse(ReleasedOnDateLayout, dateText)
   return date
 }
 
-func getPlayStoreUrl(linkElement *goquery.Selection) string {
+func (parser V1ListingParser) getPlayStoreUrl(linkElement *goquery.Selection) string {
   playStoreUrl, _ := linkElement.Attr(htmlAttrHref)
   return playStoreUrl
 }
 
-func getContentRating(document *goquery.Document) string {
+func (parser V1ListingParser) getContentRating(document *goquery.Document) string {
   selection := getValueSelection(contentRatingTitleText, document)
   return selection.Find(contentRatingSelector).Find(htmlDiv).First().Text()
 }
 
-func getValueText(title string, document *goquery.Document) string {
+func (parser V1ListingParser) getValueText(title string, document *goquery.Document) string {
   return getValueSelection(title, document).Text()
 }
 

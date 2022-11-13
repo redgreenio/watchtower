@@ -14,10 +14,10 @@ import (
 )
 
 var (
-    counter int64 = 1
-    mutex   sync.Mutex
-    waitGroup sync.WaitGroup
-    dbMutex sync.Mutex
+  counter   int64 = 1
+  mutex     sync.Mutex
+  waitGroup sync.WaitGroup
+  dbMutex   sync.Mutex
 )
 
 var red = color.New(color.FgRed)
@@ -62,7 +62,7 @@ func downloadAndSaveReleaseInformation(
   if err != nil {
     println(fmt.Sprintf("[%d/%d] Download failed for '%s'", count, appsCount, app.AppId))
   } else {
-    appRelease := parser.Parse(content)
+    appRelease := parser.V1ListingParser{}.Parse(content)
     if appRelease.AppId == "" {
       _, _ = red.Printf("Unable to parse HTML for '%s'", app.AppId)
       println()
