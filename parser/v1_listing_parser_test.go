@@ -9,7 +9,7 @@ import (
 
 func TestParseV1Listing(t *testing.T) {
   // given
-  content := ReadTestDataFile("dunzo-delivery-partner.html")
+  content := ReadTestDataFile("v1-listing.html")
   releasedOn, _ := time.Parse(ReleasedOnDateLayout, "July 19, 2021")
   expected := Release{
     Name:            "Dunzo Delivery Partner",
@@ -31,6 +31,6 @@ func TestParseV1Listing(t *testing.T) {
 }
 
 func ReadTestDataFile(filename string) string {
-  bytes, _ := ioutil.ReadFile("../testdata/valid-play-store-listing-v1/" + filename)
+  bytes, _ := ioutil.ReadFile("../testdata/valid-play-store-listings/" + filename)
   return string(bytes)
 }
