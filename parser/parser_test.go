@@ -7,7 +7,7 @@ import (
   "time"
 )
 
-func TestParse(t *testing.T) {
+func TestParseV1Listing(t *testing.T) {
   // given
   content := ReadTestDataFile("dunzo-delivery-partner.html")
   releasedOn, _ := time.Parse(ReleasedOnDateLayout, "July 19, 2021")
