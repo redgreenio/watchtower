@@ -9,8 +9,9 @@ func TestParseV2Listing(t *testing.T) {
   // given
   content := ReadTestDataFile("v2-listing.html")
   expected := Release{
-    Name:  "Hotstar",
-    AppId: "in.startv.hotstar",
+    Name:     "Hotstar",
+    AppId:    "in.startv.hotstar",
+    Installs: "500M+",
   }
 
   // when
